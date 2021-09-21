@@ -196,7 +196,7 @@ export class GitImpl implements Git {
             });
         });
 
-        return Promise.resolve(Array.from(parsedCommits.values()));
+        return Promise.resolve(Array.from(parsedCommits.values()).reverse());
     }
 
     public async checkout(hash: string, force?: boolean) {
