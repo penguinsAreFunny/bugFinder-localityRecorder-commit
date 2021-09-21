@@ -28,6 +28,7 @@ export declare class Commit implements Locality {
     is(other: Commit): boolean;
     key(): string;
     setMethods(localityDTO: Commit): void;
+    order: number;
     files: GitFiles;
     hash: string;
     abbreviatedHash: string;
