@@ -196,7 +196,11 @@ export class GitImpl implements Git {
             });
         });
 
-        return Promise.resolve(Array.from(parsedCommits.values()).reverse());
+        const commitsFromFirstToLast = Array.from(parsedCommits.values()).reverse();
+        for(let i = 0; i < commitsFromFirstToLast.length; i++){
+            commitsFromFirstToLast[i].order = i;
+        }
+        return Promise.resolve(commitsFromFirstToLast);
     }
 
     public async checkout(hash: string, force?: boolean) {

@@ -151,6 +151,7 @@ export class Commit implements Locality {
     }
 
     // @formatter:off
+    order:                                                      number;
     files:                                                      GitFiles;
     hash:                                                       string;
     abbreviatedHash:                                            string;
