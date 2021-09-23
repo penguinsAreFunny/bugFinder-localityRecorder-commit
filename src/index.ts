@@ -1,6 +1,6 @@
-import {localityAContainer} from "bugfinder-framework";
 import {FormatParser, Git, GitImpl, MADFilesFromCommit, MADFilesFromLogImpl} from "./git";
 import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "./TYPES";
+import {localityAContainer} from "bugfinder-framework-defaultcontainer";
 
 export * from "./commit"
 export * from "./commitRecorder"
