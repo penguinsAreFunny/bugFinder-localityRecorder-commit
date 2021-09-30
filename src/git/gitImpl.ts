@@ -205,8 +205,10 @@ export class GitImpl implements Git {
 
     public async checkout(hash: string, force?: boolean) {
         try {
-            if (force) await this.git.checkout(hash, ["--force"]);
-            else await this.git.checkout(hash);
+            let command = force? "git checkout -f " + hash: "git checkout " + hash
+            execSync(command, {cwd: this.options.baseDir})
+            //if (force) command = await this.git.checkout(hash, ["--force"]);
+            //else await this.git.checkout(hash);
         } catch (error) {
             const command = "git rev-parse HEAD"
             const headHash = execSync(command, {cwd: this.options.baseDir}).toString().split("\n")[0];
