@@ -94,7 +94,8 @@ export declare enum GitFileType {
     modified = 0,
     added = 1,
     deleted = 2,
-    other = 3
+    other = 3,
+    injected = 4
 }
 export interface GitFile {
     path: string;
