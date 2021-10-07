@@ -246,7 +246,8 @@ export enum GitFileType {
     modified,
     added,
     deleted,
-    other
+    other,
+    injected
 }
 
 export interface GitFile {
