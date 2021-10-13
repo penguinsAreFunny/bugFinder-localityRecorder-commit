@@ -211,9 +211,7 @@ export class GitImpl implements Git {
             const command = "git rev-parse HEAD"
             const headHash = execSync(command, {cwd: this.options.baseDir}).toString().split("\n")[0];
             const checkoutWorked = headHash === hash;
-            //const description = checkoutWorked ? "git checkout rejected with error, but worked" : "git checkout failed";
-            //this.logger?.log({error: description + "\nError Message:" + error.message},
-               // hash, description, "yellow");
+
             if (!checkoutWorked) {
                 console.error("\x1b[31m%s\x1b[0m", `Git checkout error: ${error.message}`);
                 throw new Error(`Git checkout failed with msg: ${error.message}`);
@@ -325,7 +323,6 @@ export class GitImpl implements Git {
 
         idxes.forEach((idx, index) => {
             const nextIndex = index + 1 >= idxes.length ? lines.length : idxes[index + 1];
-            //commitsLines[index] = [];
             commitsLines[index] = lines.slice(idx + 1, nextIndex);
         })
 
@@ -402,8 +399,7 @@ export class GitImpl implements Git {
         // "A   ..."                                    ADDED
         // "D   ..."                                    DELETED
         const command = `git diff-tree --no-commit-id --name-status -r ${hash}`;
-        const lines = execSync(command, {cwd: this.options.baseDir}).toString().split("\n")
-        return lines;
+        return execSync(command, {cwd: this.options.baseDir}).toString().split("\n")
     }
 
     /**

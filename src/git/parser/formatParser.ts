@@ -512,36 +512,25 @@ export class FormatParser implements GitCommitParser {
         const idxes = expandedPlaceholders.map((line, index) => {
             if (line.match(BEGIN_PLACEHOLDER_MARKER) || line.match(END_PLACEHOLDER_MARKER))
                 return index;
-        }).filter(idx => {
-            return idx !== undefined;
+        }).filter(idx2 => {
+            return idx2 !== undefined;
         });
 
-        const expandedPlaceholdersArray = idxes.filter((idx, index) => {
+        const expandedPlaceholdersArray = idxes.filter((idx2, index) => {
             return (index % 2 === 0);
-        }).map((idx, index) => {
-            return lines.slice(idx + 2, idxes[2 * index + 1]);
+        }).map((idx3, index) => {
+            return lines.slice(idx3 + 2, idxes[2 * index + 1]);
         });
 
         expandedPlaceholdersArray.forEach((expandedPlaceholder, index) => {
             const placeholder = this.partialParsers[index].gitPlaceholder;
             this.partialParsers[index].parseContent(expandedPlaceholder, DTO, placeholder);
-            /*
-            const parsedContent = this.partialParsers[index].parseContent(expandedPlaceholder, DTO);
-            Object.keys(parsedContent).forEach((key) => {
-                if (parsedContent[key] != this.partialParsers[index].gitPlaceholder)
-                    DTO[key] = parsedContent[key];
-            })
-            */
         });
 
         const madFiles: MADFiles = this.MADFilesParser.MADFilesFromCommit(residual.join("\n"));
         // @formatter:off
         DTO.files = {
             files:          [],
-            //modifiedFiles:  [],
-            //addedFiles:     [],
-            //deletedFiles:   [],
-            //otherFiles:     [],
             changed:        undefined,
             insertions:     undefined,
             deletions:      undefined

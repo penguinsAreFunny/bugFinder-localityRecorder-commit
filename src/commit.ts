@@ -131,9 +131,10 @@ export class Commit implements Locality {
             paths[index] = this._traverseRecursive(nextCommit, all, visited);
         });
 
-        return [cur, ...paths.reverse().reduce((accumulator, currentValue) => {
+        const reversedPaths = paths.reverse().reduce((accumulator, currentValue) => {
             return [...accumulator, ...currentValue];
-        })]
+        })
+        return [cur, ...reversedPaths]
     }
 
     is(other: Commit): boolean {
@@ -163,15 +164,9 @@ export class Commit implements Locality {
     authorNameRespectingMailMap:                                string;
     authorEmail:                                                string;
     authorEmailRespectingMailMap?:                              string;
-    //authorEmailLocalPart?:                                      string;
-    //authorEmailLocalPartRespectingMailMap?:                     string;
     authorDate:                                                 string;
-    //authorDateRFC2822Style:                                     string;
-    //authorDateRelative:                                         string;
     authorDateUnixTimeStamp:                                    string;
-    //authorDateISO8601LikeFormat:                                string;
     authorDateStrictIso8601Format:                              string; // alias date
-    //authorDateShortFormat?:                                     string;
     committerName:                                              string;
     committerNameRespectingMailMap:                             string;
     committerEmail?:                                            string;
@@ -179,12 +174,8 @@ export class Commit implements Locality {
     committerEmailLocalPart?:                                   string;
     committerEmailLocalPartRespectingMailMap?:                  string;
     committerDate:                                              string;
-    //committerDateRFC2822Style:                                  string;
-    //committerDateRelative:                                      string;
     committerDateUnixTimestamp:                                 string;
-    //committerDateISO8601LikeFormat:                             string;
     committerDateStrictISO8601Format:                           string;
-    //committerDateShortFormat?:                                  string;
     refNames?:                                                  string[];
     refNamesWithoutCommaWrapping?:                              string[]; // alias refs
     refNameGivenOnTheCommandLineByWhichTheCommitWasReached?:    string;
@@ -212,11 +203,6 @@ export class Commit implements Locality {
     // !! ATTENTION !! DiffResult documentation might be wrong in some cases !!
     // DiffResult.deletions ARE NOT the number of FILES changed with deletions!
     // public diff?:                                                      DiffResult;
-
-    // these 3 are represented above refs: refNamesWithoutCommaWrapping, message = rawBody
-    // public date:                                                       string;
-    // public message:                                                    string;
-    // public refs:                                                       string;
     //@formatter:on
 
 }
@@ -227,15 +213,10 @@ export class Commit implements Locality {
  * the user-defined type guards: isGitTextFile(path) and isGitBinaryFile(path) | path: GitTextFile | GitBinaryFile
  * @see isGitTextFile
  * @see isGitBinaryFile
- * TODO: decide whether defined type guard or TypeDiscriminator is best solution
  */
 export interface GitFiles {
     // @formatter:off
     files: (GitTextFile | GitBinaryFile)[];
-//    modifiedFiles:  (GitTextFile | GitBinaryFile)[];
-//    addedFiles:     (GitTextFile | GitBinaryFile)[];
-//    deletedFiles:   (GitTextFile | GitBinaryFile)[];
-//    otherFiles:     (GitTextFile | GitBinaryFile)[];
     changed:        number;
     insertions:     number;
     deletions:      number;
@@ -253,7 +234,6 @@ export enum GitFileType {
 export interface GitFile {
     path: string;
     type: GitFileType;
-    //"modified" | "added" | "deleted" | "other";
 }
 
 /**

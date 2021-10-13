@@ -11,7 +11,7 @@ export class CommitRecorder implements LocalityRecorder<Commit>{
     git: Git;
 
     async getLocalities(): Promise<Commit[]> {
-        return await this.git.logAll();
+        return this.git.logAll();
     }
 
 }
