@@ -54,10 +54,7 @@ var CommitRecorder = /** @class */ (function () {
     CommitRecorder.prototype.getLocalities = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.git.logAll()];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
+                return [2 /*return*/, this.git.logAll()];
             });
         });
     };
@@ -71,4 +68,4 @@ var CommitRecorder = /** @class */ (function () {
     return CommitRecorder;
 }());
 exports.CommitRecorder = CommitRecorder;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWl0UmVjb3JkZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29tbWl0UmVjb3JkZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsdUNBQTZDO0FBQzdDLGlDQUFnRTtBQU1oRTtJQUFBO0lBU0EsQ0FBQztJQUpTLHNDQUFhLEdBQW5COzs7OzRCQUNXLHFCQUFNLElBQUksQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLEVBQUE7NEJBQTlCLHNCQUFPLFNBQXVCLEVBQUM7Ozs7S0FDbEM7SUFKRDtRQURDLElBQUEsa0JBQU0sRUFBQywrQ0FBdUMsQ0FBQyxHQUFHLENBQUM7OytDQUMzQztJQUhBLGNBQWM7UUFEMUIsSUFBQSxzQkFBVSxHQUFFO09BQ0EsY0FBYyxDQVMxQjtJQUFELHFCQUFDO0NBQUEsQUFURCxJQVNDO0FBVFksd0NBQWMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWl0UmVjb3JkZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29tbWl0UmVjb3JkZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsdUNBQTZDO0FBQzdDLGlDQUFnRTtBQU1oRTtJQUFBO0lBU0EsQ0FBQztJQUpTLHNDQUFhLEdBQW5COzs7Z0JBQ0ksc0JBQU8sSUFBSSxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsRUFBQzs7O0tBQzVCO0lBSkQ7UUFEQyxJQUFBLGtCQUFNLEVBQUMsK0NBQXVDLENBQUMsR0FBRyxDQUFDOzsrQ0FDM0M7SUFIQSxjQUFjO1FBRDFCLElBQUEsc0JBQVUsR0FBRTtPQUNBLGNBQWMsQ0FTMUI7SUFBRCxxQkFBQztDQUFBLEFBVEQsSUFTQztBQVRZLHdDQUFjIn0=

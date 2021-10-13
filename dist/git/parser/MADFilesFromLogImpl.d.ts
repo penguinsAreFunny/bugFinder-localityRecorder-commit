@@ -20,9 +20,6 @@ export declare class MADFilesFromLogImpl implements MADFilesFromCommit {
      * the marker at the beginning of each line
      *
      * Used for parsing Modified, Added and Deleted files with format: "M\tpath" | "A\tpath" | "D\tpath".
-     *
-     * TODO: just match beginning matcher.length chars of line
-     *
      * @param logLines
      * @param marker
      * @private

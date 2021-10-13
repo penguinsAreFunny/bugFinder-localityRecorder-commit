@@ -82,7 +82,6 @@ export declare class Commit implements Locality {
  * the user-defined type guards: isGitTextFile(path) and isGitBinaryFile(path) | path: GitTextFile | GitBinaryFile
  * @see isGitTextFile
  * @see isGitBinaryFile
- * TODO: decide whether defined type guard or TypeDiscriminator is best solution
  */
 export interface GitFiles {
     files: (GitTextFile | GitBinaryFile)[];
