@@ -16,7 +16,7 @@ export declare const END_PLACEHOLDERS_MARKER = "@@\u00A7END_PLACEHOLDERS_MARKER@
 export declare class FormatParser implements GitCommitParser {
     readonly MADFilesParser: MADFilesFromCommit;
     partialParsers: any[];
-    constructor(MADFilesParser: MADFilesFromCommit);
+    constructor();
     /**
      * Returns the string used for pretty-format in git so that the function parse is able to parse all necessary data
      * @see parse

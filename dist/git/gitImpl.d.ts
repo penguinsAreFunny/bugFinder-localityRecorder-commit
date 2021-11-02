@@ -13,9 +13,9 @@ import { Commit } from "../commit";
  *      const git: GitTool = gitContainer.get<GitTool>(API_TYPES.Git)
  */
 export declare class GitImpl implements Git {
+    private git;
     readonly options: GitOptions;
     readonly gitCommitParser: FormatParser;
-    private git;
     /**
      * @usage const options: GitOptions = {
      *          baseDir: "../Repositories/Typescript",
@@ -24,10 +24,8 @@ export declare class GitImpl implements Git {
      *      }
      *      gitContainer.bind<SimpleGitOptions>(API_TYPES.GitOptions).toConstantValue(options)
      *      const git: GitTool = gitContainer.get<GitTool>(API_TYPES.Git)
-     * @param options
-     * @param gitCommitParser
      */
-    constructor(options: GitOptions, gitCommitParser: FormatParser);
+    constructor();
     /**
      * Returns the parsed log as an array of GitCommits
      * @See GitCommit

@@ -48,8 +48,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommitRecorder = void 0;
 var inversify_1 = require("inversify");
 var TYPES_1 = require("./TYPES");
+var git_1 = require("./git");
 var CommitRecorder = /** @class */ (function () {
     function CommitRecorder() {
+        this.git = new git_1.GitImpl();
     }
     CommitRecorder.prototype.getLocalities = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -59,6 +61,7 @@ var CommitRecorder = /** @class */ (function () {
         });
     };
     __decorate([
+        (0, inversify_1.optional)(),
         (0, inversify_1.inject)(TYPES_1.BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.git),
         __metadata("design:type", Object)
     ], CommitRecorder.prototype, "git", void 0);
@@ -68,4 +71,4 @@ var CommitRecorder = /** @class */ (function () {
     return CommitRecorder;
 }());
 exports.CommitRecorder = CommitRecorder;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWl0UmVjb3JkZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29tbWl0UmVjb3JkZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsdUNBQTZDO0FBQzdDLGlDQUFnRTtBQU1oRTtJQUFBO0lBU0EsQ0FBQztJQUpTLHNDQUFhLEdBQW5COzs7Z0JBQ0ksc0JBQU8sSUFBSSxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsRUFBQzs7O0tBQzVCO0lBSkQ7UUFEQyxJQUFBLGtCQUFNLEVBQUMsK0NBQXVDLENBQUMsR0FBRyxDQUFDOzsrQ0FDM0M7SUFIQSxjQUFjO1FBRDFCLElBQUEsc0JBQVUsR0FBRTtPQUNBLGNBQWMsQ0FTMUI7SUFBRCxxQkFBQztDQUFBLEFBVEQsSUFTQztBQVRZLHdDQUFjIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWl0UmVjb3JkZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29tbWl0UmVjb3JkZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsdUNBQXVEO0FBQ3ZELGlDQUFnRTtBQUNoRSw2QkFBbUM7QUFLbkM7SUFBQTtRQUdJLFFBQUcsR0FBUSxJQUFJLGFBQU8sRUFBRSxDQUFDO0lBTTdCLENBQUM7SUFKUyxzQ0FBYSxHQUFuQjs7O2dCQUNJLHNCQUFPLElBQUksQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLEVBQUM7OztLQUM1QjtJQUpEO1FBREMsSUFBQSxvQkFBUSxHQUFFO1FBQUUsSUFBQSxrQkFBTSxFQUFDLCtDQUF1QyxDQUFDLEdBQUcsQ0FBQzs7K0NBQ3ZDO0lBSGhCLGNBQWM7UUFEMUIsSUFBQSxzQkFBVSxHQUFFO09BQ0EsY0FBYyxDQVMxQjtJQUFELHFCQUFDO0NBQUEsQUFURCxJQVNDO0FBVFksd0NBQWMifQ==
