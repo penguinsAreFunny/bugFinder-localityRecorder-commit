@@ -1,8 +1,9 @@
-import {inject, injectable} from "inversify";
+import {inject, injectable, optional} from "inversify";
 import {GitCommitParser} from "./gitCommitParser";
 import {MADFiles, MADFilesFromCommit} from "./MADFilesFromCommit";
 import {Commit, GitFileType} from "../../commit";
 import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "../../TYPES";
+import {MADFilesFromLogImpl} from "./MADFilesFromLogImpl";
 
 /**
  * Important: the following constants will be used as RegEx-Matchers!
@@ -21,10 +22,11 @@ export const END_PLACEHOLDERS_MARKER    = "@@§END_PLACEHOLDERS_MARKER@@";   // 
  */
 @injectable()
 export class FormatParser implements GitCommitParser {
+    @optional() @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.madFilesFromCommitParser)
+    public readonly MADFilesParser: MADFilesFromCommit = new MADFilesFromLogImpl()
 
     partialParsers = [];
-
-    constructor(@inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.madFilesFromCommitParser) public readonly MADFilesParser: MADFilesFromCommit) {
+    constructor() {
         this.partialParsers.push({
             marker: "@@\\COMMIT_HASH@@",
             gitPlaceholder: "%H",

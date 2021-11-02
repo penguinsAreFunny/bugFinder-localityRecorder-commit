@@ -1,14 +1,14 @@
-import {inject, injectable} from "inversify";
+import {inject, injectable, optional} from "inversify";
 import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "./TYPES";
-import {Git} from "./git";
+import {Git, GitImpl} from "./git";
 import {Commit} from "./commit";
 import {LocalityRecorder} from "bugfinder-framework";
 
 @injectable()
 export class CommitRecorder implements LocalityRecorder<Commit>{
 
-    @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.git)
-    git: Git;
+    @optional() @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.git)
+    git: Git = new GitImpl();
 
     async getLocalities(): Promise<Commit[]> {
         return this.git.logAll();

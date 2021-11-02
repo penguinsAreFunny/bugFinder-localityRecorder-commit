@@ -8,7 +8,7 @@ import simpleGit, {
     SimpleGit,
     SimpleGitOptions
 } from 'simple-git';
-import {inject, injectable} from "inversify";
+import {inject, injectable, optional} from "inversify";
 import {BEGIN_COMMIT_MARKER, FormatParser} from "./parser/formatParser";
 import {Git, GitOptions} from "../git";
 import {Commit, GitBinaryFile, GitFileType, GitTextFile} from "../commit";
@@ -29,6 +29,10 @@ import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "../TYPES";
 export class GitImpl implements Git {
     private git: SimpleGit;
 
+    @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitOptions) readonly options: GitOptions
+
+    @optional() @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitCommitParser)
+    readonly gitCommitParser: FormatParser = new FormatParser()
     /**
      * @usage const options: GitOptions = {
      *          baseDir: "../Repositories/Typescript",
@@ -37,18 +41,13 @@ export class GitImpl implements Git {
      *      }
      *      gitContainer.bind<SimpleGitOptions>(API_TYPES.GitOptions).toConstantValue(options)
      *      const git: GitTool = gitContainer.get<GitTool>(API_TYPES.Git)
-     * @param options
-     * @param gitCommitParser
      */
-    constructor(@inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitOptions) readonly options: GitOptions,
-                @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitCommitParser) readonly gitCommitParser: FormatParser,
-                //@inject(API_TYPES.logger) @optional() readonly logger?: CommitLogger
-                ) {
+    constructor() {
 
         const simpleGitOptions: SimpleGitOptions = {
-            baseDir: options.baseDir,
+            baseDir: this.options.baseDir,
             binary: 'git',
-            maxConcurrentProcesses: options.maxConcurrentProcesses
+            maxConcurrentProcesses: this.options.maxConcurrentProcesses
         }
         this.git = simpleGit(simpleGitOptions);
     }
