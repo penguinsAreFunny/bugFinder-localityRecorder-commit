@@ -29,7 +29,18 @@ import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "../TYPES";
 export class GitImpl implements Git {
     private git: SimpleGit;
 
-    @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitOptions) readonly options: GitOptions
+    @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitOptions)
+    _options: GitOptions
+    set options(options: GitOptions){
+        this._options = options
+        const simpleGitOptions: SimpleGitOptions = {
+            baseDir: this._options.baseDir,
+            binary: 'git',
+            maxConcurrentProcesses: this._options.maxConcurrentProcesses
+        }
+        this.git = simpleGit(simpleGitOptions);
+    }
+
 
     @optional() @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitCommitParser)
     readonly gitCommitParser: FormatParser = new FormatParser()
@@ -44,12 +55,6 @@ export class GitImpl implements Git {
      */
     constructor() {
 
-        const simpleGitOptions: SimpleGitOptions = {
-            baseDir: this.options.baseDir,
-            binary: 'git',
-            maxConcurrentProcesses: this.options.maxConcurrentProcesses
-        }
-        this.git = simpleGit(simpleGitOptions);
     }
 
     /**
@@ -81,7 +86,7 @@ export class GitImpl implements Git {
         const command = `git log --name-status -r ${flagsStringified} --pretty=format:"${format}"`;
 
         const prettyFormatLog = execSync(command, {
-            cwd: this.options.baseDir,
+            cwd: this._options.baseDir,
             maxBuffer: 1024 * 1024 * 1024 * 4
         }).toString();
 
@@ -208,7 +213,7 @@ export class GitImpl implements Git {
             else await this.git.checkout(hash);
         } catch (error) {
             const command = "git rev-parse HEAD"
-            const headHash = execSync(command, {cwd: this.options.baseDir}).toString().split("\n")[0];
+            const headHash = execSync(command, {cwd: this._options.baseDir}).toString().split("\n")[0];
             const checkoutWorked = headHash === hash;
 
             if (!checkoutWorked) {
@@ -398,7 +403,7 @@ export class GitImpl implements Git {
         // "A   ..."                                    ADDED
         // "D   ..."                                    DELETED
         const command = `git diff-tree --no-commit-id --name-status -r ${hash}`;
-        return execSync(command, {cwd: this.options.baseDir}).toString().split("\n")
+        return execSync(command, {cwd: this._options.baseDir}).toString().split("\n")
     }
 
     /**
@@ -416,7 +421,7 @@ export class GitImpl implements Git {
         // "A   ..."                                    ADDED
         // "D   ..."                                    DELETED
         const command = `git diff-tree --no-commit-id --name-status -r ${hash}`;
-        const gitDiff = exec(command, {cwd: this.options.baseDir, maxBuffer: 1024 * 1024 * 256});
+        const gitDiff = exec(command, {cwd: this._options.baseDir, maxBuffer: 1024 * 1024 * 256});
 
         const chunks = [];
         return new Promise((resolve, reject) => {
