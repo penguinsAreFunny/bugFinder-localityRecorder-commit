@@ -9,8 +9,8 @@ import simpleGit, {
     SimpleGitOptions
 } from 'simple-git';
 import {inject, injectable, optional} from "inversify";
-import {BEGIN_COMMIT_MARKER, FormatParser} from "./parser/formatParser";
-import {Git, GitOptions} from "../git";
+import {BEGIN_COMMIT_MARKER, FormatParser} from "./parser";
+import {Git, GitOptions} from "./git";
 import {Commit, GitBinaryFile, GitFileType, GitTextFile} from "../commit";
 import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "../TYPES";
 
@@ -29,21 +29,6 @@ import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "../TYPES";
 export class GitImpl implements Git {
     private git: SimpleGit;
 
-    @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitOptions)
-    _options: GitOptions
-    set options(options: GitOptions){
-        this._options = options
-        const simpleGitOptions: SimpleGitOptions = {
-            baseDir: this._options.baseDir,
-            binary: 'git',
-            maxConcurrentProcesses: this._options.maxConcurrentProcesses
-        }
-        this.git = simpleGit(simpleGitOptions);
-    }
-
-
-    @optional() @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitCommitParser)
-    readonly gitCommitParser: FormatParser = new FormatParser()
     /**
      * @usage const options: GitOptions = {
      *          baseDir: "../Repositories/Typescript",
@@ -53,8 +38,14 @@ export class GitImpl implements Git {
      *      gitContainer.bind<SimpleGitOptions>(API_TYPES.GitOptions).toConstantValue(options)
      *      const git: GitTool = gitContainer.get<GitTool>(API_TYPES.Git)
      */
-    constructor() {
-
+    constructor(@inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitOptions) readonly options: GitOptions,
+                @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.gitCommitParser) readonly gitCommitParser: FormatParser) {
+        const simpleGitOptions: SimpleGitOptions = {
+            baseDir: this.options.baseDir,
+            binary: 'git',
+            maxConcurrentProcesses: this.options.maxConcurrentProcesses
+        }
+        this.git = simpleGit(simpleGitOptions);
     }
 
     /**
@@ -86,7 +77,7 @@ export class GitImpl implements Git {
         const command = `git log --name-status -r ${flagsStringified} --pretty=format:"${format}"`;
 
         const prettyFormatLog = execSync(command, {
-            cwd: this._options.baseDir,
+            cwd: this.options.baseDir,
             maxBuffer: 1024 * 1024 * 1024 * 4
         }).toString();
 
@@ -213,7 +204,7 @@ export class GitImpl implements Git {
             else await this.git.checkout(hash);
         } catch (error) {
             const command = "git rev-parse HEAD"
-            const headHash = execSync(command, {cwd: this._options.baseDir}).toString().split("\n")[0];
+            const headHash = execSync(command, {cwd: this.options.baseDir}).toString().split("\n")[0];
             const checkoutWorked = headHash === hash;
 
             if (!checkoutWorked) {
@@ -403,7 +394,7 @@ export class GitImpl implements Git {
         // "A   ..."                                    ADDED
         // "D   ..."                                    DELETED
         const command = `git diff-tree --no-commit-id --name-status -r ${hash}`;
-        return execSync(command, {cwd: this._options.baseDir}).toString().split("\n")
+        return execSync(command, {cwd: this.options.baseDir}).toString().split("\n")
     }
 
     /**
@@ -421,7 +412,7 @@ export class GitImpl implements Git {
         // "A   ..."                                    ADDED
         // "D   ..."                                    DELETED
         const command = `git diff-tree --no-commit-id --name-status -r ${hash}`;
-        const gitDiff = exec(command, {cwd: this._options.baseDir, maxBuffer: 1024 * 1024 * 256});
+        const gitDiff = exec(command, {cwd: this.options.baseDir, maxBuffer: 1024 * 1024 * 256});
 
         const chunks = [];
         return new Promise((resolve, reject) => {

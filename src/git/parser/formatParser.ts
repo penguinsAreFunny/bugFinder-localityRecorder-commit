@@ -3,7 +3,7 @@ import {GitCommitParser} from "./gitCommitParser";
 import {MADFiles, MADFilesFromCommit} from "./MADFilesFromCommit";
 import {Commit, GitFileType} from "../../commit";
 import {BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES} from "../../TYPES";
-import {MADFilesFromLogImpl} from "./MADFilesFromLogImpl";
+import {MADFilesFromLog} from "./MADFilesFromLog";
 
 /**
  * Important: the following constants will be used as RegEx-Matchers!
@@ -22,8 +22,8 @@ export const END_PLACEHOLDERS_MARKER    = "@@§END_PLACEHOLDERS_MARKER@@";   // 
  */
 @injectable()
 export class FormatParser implements GitCommitParser {
-    @optional() @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.madFilesFromCommitParser)
-    public readonly MADFilesParser: MADFilesFromCommit = new MADFilesFromLogImpl()
+    @inject(BUGFINDER_LOCALITYRECORDER_COMMIT_TYPES.madFilesFromCommitParser)
+    public readonly MADFilesParser: MADFilesFromCommit
 
     partialParsers = [];
     constructor() {

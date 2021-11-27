@@ -6,7 +6,7 @@ export interface GitOptions {
 }
 
 export interface Git {
-    _options: GitOptions;
+    options: GitOptions;
 
     /**
      * Returns the parsed log as an array of ordered from semantic older to newer

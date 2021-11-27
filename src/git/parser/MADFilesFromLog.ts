@@ -8,7 +8,7 @@ import {
 } from "./MADFilesFromCommit";
 
 @injectable()
-export class MADFilesFromLogImpl implements MADFilesFromCommit {
+export class MADFilesFromLog implements MADFilesFromCommit {
 
     MADFilesFromCommit(commitNameStatus: string): MADFiles {
         const lines = commitNameStatus.split("\n");
